@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node server"
+    "dev": "nodemon server"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
+    "nodemon": "^3.1.7",
     "sequelize-cli": "^6.6.2"
   }
 }
