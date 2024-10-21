@@ -5,11 +5,9 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       UserRole.belongsTo(models.User, {
         foreignKey: "user_uuid",
-        onDelete: "CASCADE", // Ensure the UserRole is deleted if the associated user is deleted
       });
       UserRole.belongsTo(models.Role, {
         foreignKey: "role_uuid",
-        onDelete: "CASCADE", // Ensure the UserRole is deleted if the associated role is deleted
       });
       UserRole.belongsTo(models.User, {
         foreignKey: "created_by",
@@ -36,7 +34,6 @@ export default (sequelize, DataTypes) => {
           model: "users", // Name of the User table
           key: "uuid", // Primary key in the User table
         },
-        onDelete: "CASCADE",
       },
       role_uuid: {
         type: DataTypes.UUID,
@@ -45,7 +42,6 @@ export default (sequelize, DataTypes) => {
           model: "roles", // Name of the Role table
           key: "uuid", // Primary key in the Role table
         },
-        onDelete: "CASCADE",
       },
       created_by: {
         type: DataTypes.UUID,
@@ -72,6 +68,14 @@ export default (sequelize, DataTypes) => {
       updatedAt: "updated_at", // Custom name for updatedAt
       paranoid: true, // enables soft deletion with deletedAt
       deletedAt: "deleted_at", // custom name for deletedAt
+
+      // add unique constraint for user_uuid + role_uuid
+      indexes: [
+        {
+          unique: true,
+          fields: ["user_uuid", "role_uuid"], // Unique constraint on these fields
+        },
+      ],
     }
   );
   return UserRole;

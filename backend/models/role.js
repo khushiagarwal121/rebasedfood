@@ -1,7 +1,15 @@
 import { Model } from "sequelize";
 
 export default (sequelize, DataTypes) => {
-  class Role extends Model {}
+  class Role extends Model {
+    static associate(models) {
+      Role.belongsToMany(models.User, {
+        through: models.UserRole,
+        foreignKey: "role_uuid", // Foreign key in UserRole
+        otherKey: "user_uuid", // Other key in UserRole
+      });
+    }
+  }
   Role.init(
     {
       uuid: {
