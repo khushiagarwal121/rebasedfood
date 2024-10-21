@@ -8,6 +8,14 @@ export default (sequelize, DataTypes) => {
         foreignKey: "user_uuid", // Foreign key in UserRole
         otherKey: "role_uuid", // Other key in UserRole
       });
+      User.hasMany(models.Address, {
+        foreignKey: "user_uuid", // Foreign key in Address table
+        as: "addresses", // Alias for the relationship
+      });
+      User.hasMany(models.Restaurant, {
+        foreignKey: "owner_uuid", // Foreign key in Restaurant table
+        as: "restaurants", // Alias for the relationship
+      });
     }
   }
   User.init(
