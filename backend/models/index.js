@@ -1,4 +1,5 @@
 import { Sequelize, DataTypes } from "sequelize";
+<<<<<<< HEAD
 import User from "./user.js";
 import Role from "./role.js";
 import UserRole from "./user_role.js";
@@ -9,6 +10,12 @@ import RestaurantOperationalStatus from "./restaurant_operational_status.js";
 import DeliveryPartnerDocument from "./delivery_partner_document.js";
 import RestaurantDocument from "./restaurant_document.js";
 import DeliveryPartner from "./delivery_partner.js";
+=======
+
+import RestaurantDocument from "./restaurant_document.js";
+import DeliveryPartner from "./delivery_partner.js";
+import DeliveryPartnerDocument from "./delivery_partner_document.js";
+>>>>>>> 1d036a1 (feat: create models for restaurant documents, delivery partnerand delivery partner documents)
 
 // connect to local database
 const sequelize = new Sequelize(
@@ -22,9 +29,10 @@ const sequelize = new Sequelize(
   }
 );
 
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+const db = {
+  Sequelize,
+  sequelize,
+};
 
 db.User = User(sequelize, DataTypes);
 db.Role = Role(sequelize, DataTypes);
@@ -138,33 +146,19 @@ db.DeliveryPartnerDocument.associate(db);
 //   foreignKey: "updated_by",
 //   as: "updater",
 // });
+// List of models
+const models = [RestaurantDocument, DeliveryPartner, DeliveryPartnerDocument];
 
-// //relationship between user and role
-// db.Role.belongsToMany(db.User, {
-//   through: db.UserRole,
-//   foreignKey: "role_uuid",
-//   otherkey: "user_uuid",
-// });
-// db.User.belongsToMany(db.Role, {
-//   through: db.UserRole,
-//   foreignKey: "user_uuid",
-//   otherkey: "role_uuid",
-// });
+// Dynamically add models to the db object
+models.forEach((model) => {
+  db[model.name] = model(sequelize, DataTypes);
+});
 
-// //relationship between refresh token and user
-// db.RefreshToken.belongsTo(db.User, {
-//   foreignKey: "user_uuid",
-// });
-
-// db.RefreshToken.belongsTo(db.User, {
-//   foreignKey: "created_by",
-//   as: "creator",
-// });
-
-// db.RefreshToken.belongsTo(db.User, {
-//   foreignKey: "updated_by",
-//   as: "updater",
-// });
+// Define relationships here
+// Assuming RestaurantDocument references Restaurant
+db.RestaurantDocument.associate(db);
+db.DeliveryPartner.associate(db); // Ensure you define this in your DeliveryPartner model
+db.DeliveryPartnerDocument.associate(db); // Ensure you define this in your DeliveryPartnerDocument model
 
 const connectDB = async () => {
   try {
