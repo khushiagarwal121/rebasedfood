@@ -5,12 +5,12 @@ export default (sequelize) => {
     static associate(models) {
       // Define associations
       // Adding associations for created_by and updated_by
-      RestaurantDocument.belongsTo(models.Restaurant, {
+      RestaurantDocument.belongsTo(models.User, {
         foreignKey: "created_by", // Foreign key for the creator
         as: "creator", // Alias for the creator
       });
 
-      RestaurantDocument.belongsTo(models.Restaurant, {
+      RestaurantDocument.belongsTo(models.User, {
         foreignKey: "updated_by", // Foreign key for the updater
         as: "updater", // Alias for the updater
       });
@@ -58,7 +58,7 @@ export default (sequelize) => {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
-          model: "restaurants",
+          model: "users",
           key: "uuid", // Primary key in the restaurant table
         },
       },
@@ -66,7 +66,7 @@ export default (sequelize) => {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
-          model: "restaurants",
+          model: "users",
           key: "uuid", // Primary key in the restaurant table
         },
       },

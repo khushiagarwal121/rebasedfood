@@ -1,5 +1,4 @@
 import { Sequelize, DataTypes } from "sequelize";
-<<<<<<< HEAD
 import User from "./user.js";
 import Role from "./role.js";
 import UserRole from "./user_role.js";
@@ -10,12 +9,6 @@ import RestaurantOperationalStatus from "./restaurant_operational_status.js";
 import DeliveryPartnerDocument from "./delivery_partner_document.js";
 import RestaurantDocument from "./restaurant_document.js";
 import DeliveryPartner from "./delivery_partner.js";
-=======
-
-import RestaurantDocument from "./restaurant_document.js";
-import DeliveryPartner from "./delivery_partner.js";
-import DeliveryPartnerDocument from "./delivery_partner_document.js";
->>>>>>> 1d036a1 (feat: create models for restaurant documents, delivery partnerand delivery partner documents)
 
 // connect to local database
 const sequelize = new Sequelize(
@@ -147,18 +140,18 @@ db.DeliveryPartnerDocument.associate(db);
 //   as: "updater",
 // });
 // List of models
-const models = [RestaurantDocument, DeliveryPartner, DeliveryPartnerDocument];
+// const models = [RestaurantDocument, DeliveryPartner, DeliveryPartnerDocument];
 
 // Dynamically add models to the db object
-models.forEach((model) => {
-  db[model.name] = model(sequelize, DataTypes);
-});
+// models.forEach((model) => {
+//   db[model.name] = model(sequelize, DataTypes);
+// });
 
 // Define relationships here
 // Assuming RestaurantDocument references Restaurant
-db.RestaurantDocument.associate(db);
-db.DeliveryPartner.associate(db); // Ensure you define this in your DeliveryPartner model
-db.DeliveryPartnerDocument.associate(db); // Ensure you define this in your DeliveryPartnerDocument model
+// db.RestaurantDocument.associate(db);
+// db.DeliveryPartner.associate(db); // Ensure you define this in your DeliveryPartner model
+// db.DeliveryPartnerDocument.associate(db); // Ensure you define this in your DeliveryPartnerDocument model
 
 const connectDB = async () => {
   try {
