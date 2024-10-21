@@ -66,6 +66,13 @@ export default (sequelize, DataTypes) => {
       pincode: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          isNumeric: true, // Ensures only numeric values
+          len: {
+            args: [6, 6], // Pincode must be exactly 6 digits long
+            msg: "Pincode must be exactly 6 digits long for India",
+          },
+        },
       },
       city: {
         type: DataTypes.STRING,
@@ -83,11 +90,25 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      latitude: {
+        type: DataTypes.DECIMAL(10, 8),
+      },
+      longitude: {
+        type: DataTypes.DECIMAL(11, 8),
+      },
       created_by: {
         type: DataTypes.UUID,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
       updated_by: {
         type: DataTypes.UUID,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
       deleted_at: {
         type: DataTypes.DATE,

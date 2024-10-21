@@ -35,13 +35,17 @@ export default (sequelize, DataTypes) => {
       },
       created_by: {
         type: DataTypes.UUID,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
       updated_by: {
         type: DataTypes.UUID,
-      },
-      deleted_at: {
-        type: DataTypes.DATE,
-        allowNull: true,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
     },
     {

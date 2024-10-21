@@ -34,6 +34,24 @@ db.RestaurantOperationalStatus = RestaurantOperationalStatus(
   DataTypes
 );
 
+// Relationship between user and address
+db.User.hasMany(models.Address, {
+  foreignKey: "user_uuid",
+  as: "addresses",
+});
+db.Address.belongsTo(models.User, {
+  foreignKey: "user_uuid",
+  as: "user",
+});
+db.Address.belongsTo(models.User, {
+  foreignKey: "created_by",
+  as: "creator",
+});
+db.Address.belongsTo(models.User, {
+  foreignKey: "updated_by",
+  as: "updater",
+});
+
 //relationship between user and role
 db.Role.belongsToMany(db.User, {
   through: db.UserRole,
@@ -59,49 +77,48 @@ db.RefreshToken.belongsTo(db.User, {
   as: "updater",
 });
 
-Address.belongsTo(models.User, {
-  foreignKey: "user_uuid",
-  as: "user",
-});
-Address.belongsTo(models.Restaurant, {
+// Relationship between restaurant and address
+db.Address.belongsTo(models.Restaurant, {
   foreignKey: "restaurant_uuid",
   as: "restaurant",
 });
-Address.belongsTo(models.User, {
+
+// Relationship between user and restaurant
+db.User.hasMany(models.Restaurant, {
+  foreignKey: "owner_uuid",
+  as: "restaurants",
+});
+db.Restaurant.belongsTo(models.User, {
+  foreignKey: "owner_uuid",
+  as: "owner",
+});
+db.Restaurant.belongsTo(models.User, {
   foreignKey: "created_by",
   as: "creator",
 });
-Address.belongsTo(models.User, {
+db.Restaurant.belongsTo(models.User, {
   foreignKey: "updated_by",
   as: "updater",
 });
 
-Restaurant.belongsTo(models.User, {
-  foreignKey: "owner_id",
-  as: "owner",
-});
-Restaurant.belongsTo(models.RestaurantOperationalStatus, {
+// Relationship between restaurant and restaurant operational status
+db.Restaurant.belongsTo(models.RestaurantOperationalStatus, {
   foreignKey: "operational_status_uuid",
   as: "operationalStatus",
 });
-Restaurant.belongsTo(models.RestaurantDocument, {
+
+// Relationship between restaurant and restaurant document
+db.Restaurant.belongsTo(models.RestaurantDocument, {
   foreignKey: "restaurant_document_uuid",
   as: "restaurantDocument",
 });
-Restaurant.belongsTo(models.User, {
-  foreignKey: "created_by",
-  as: "creator",
-});
-Restaurant.belongsTo(models.User, {
-  foreignKey: "updated_by",
-  as: "updater",
-});
 
-RestaurantOperationalStatus.belongsTo(models.User, {
+// Relationship between user and restaurant operational status
+db.RestaurantOperationalStatus.belongsTo(models.User, {
   foreignKey: "created_by",
   as: "creator",
 });
-RestaurantOperationalStatus.belongsTo(models.User, {
+db.RestaurantOperationalStatus.belongsTo(models.User, {
   foreignKey: "updated_by",
   as: "updater",
 });

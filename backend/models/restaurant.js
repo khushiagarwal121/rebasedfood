@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
   class Restaurant extends Model {
     static associate(models) {
       Restaurant.belongsTo(models.User, {
-        foreignKey: "owner_id",
+        foreignKey: "owner_uuid",
         as: "owner",
       });
       Restaurant.belongsTo(models.RestaurantOperationalStatus, {
@@ -33,7 +33,7 @@ export default (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      owner_id: {
+      owner_uuid: {
         type: DataTypes.UUID,
         references: {
           model: "users",
@@ -44,7 +44,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      image: {
+      images: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
@@ -57,10 +57,6 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
-      total_review: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       operating_hour: {
         type: DataTypes.JSONB,
         allowNull: true,
@@ -70,7 +66,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: true,
       },
-      is_verified: {
+      is_valid: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
@@ -94,13 +90,17 @@ export default (sequelize, DataTypes) => {
       },
       created_by: {
         type: DataTypes.UUID,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
       updated_by: {
         type: DataTypes.UUID,
-      },
-      deleted_at: {
-        type: DataTypes.DATE,
-        allowNull: true,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
     },
     {

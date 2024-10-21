@@ -8,7 +8,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      owner_id: {
+      owner_uuid: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      image: {
+      images: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true,
       },
@@ -32,10 +32,6 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
-      total_review: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
       operating_hour: {
         type: Sequelize.JSONB,
         allowNull: true,
@@ -45,7 +41,7 @@ module.exports = {
         allowNull: false,
         defaultValue: true,
       },
-      is_verified: {
+      is_valid: {
         type: Sequelize.BOOLEAN,
         allowNull: true,
       },
@@ -71,9 +67,17 @@ module.exports = {
       },
       created_by: {
         type: Sequelize.UUID,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
       updated_by: {
         type: Sequelize.UUID,
+        references: {
+          model: "users", // Name of the User table
+          key: "uuid", // Primary key in the User table
+        },
       },
       created_at: {
         type: Sequelize.DATE,
